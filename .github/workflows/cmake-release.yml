@@ -38,12 +38,12 @@ jobs:
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
-            input_file: ${{ vars.REPO_NAME }}.so
+            input_file: lib${{ vars.REPO_NAME }}.so
             output_file: ${{ vars.REPO_NAME }}.linux.release.x86_64.so
           - os: macos-latest
             c_compiler: clang
             cpp_compiler: clang++
-            input_file: ${{ vars.REPO_NAME }}.dylib
+            input_file: lib${{ vars.REPO_NAME }}.dylib
             output_file: ${{ vars.REPO_NAME }}.macos.release.dylib
 
 
