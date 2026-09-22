@@ -6,6 +6,9 @@ on:
     tags:
       - 'v*'
 
+env:
+  PROJECT_NAME: ghactiontests
+
 permissions:
   contents: write
   packages: write
@@ -33,18 +36,18 @@ jobs:
           - os: windows-latest
             c_compiler: x86_64-w64-mingw32-gcc
             cpp_compiler: x86_64-w64-mingw32-g++
-            input_file: libghactiontests.dll
-            output_file: ghactiontest.windows.release.x86_64.dll
+            input_file: lib${{ env.PROJECT_NAME }}.dll
+            output_file: ${{ env.PROJECT_NAME }}.windows.release.x86_64.dll
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
-            input_file: libghactiontests.so
-            output_file: ghactiontest.linux.release.x86_64.so
+            input_file: ${{ env.PROJECT_NAME }}.so
+            output_file: ${{ env.PROJECT_NAME }}.linux.release.x86_64.so
           - os: macos-latest
             c_compiler: clang
             cpp_compiler: clang++
-            input_file: libghactiontests.dylib
-            output_file: ghactiontest.macos.release.dylib
+            input_file: ${{ env.PROJECT_NAME }}.dylib
+            output_file: ${{ env.PROJECT_NAME }}.macos.release.dylib
 
 
 
@@ -130,14 +133,14 @@ jobs:
     - name: Download All Artifacts
       uses: actions/download-artifact@v8
       with:
-        path: addons/ghactiontest
+        path: addons/${{ env.PROJECT_NAME }}
         merge-multiple: true
 
     - name: Build Archives
       run: |
-        zip -r ghactiontests-${{ github.ref_name }}.zip addons/
-        tar -czvf ghactiontests-${{ github.ref_name }}.tar.gz addons
-        sha256sum ghactiontests-*.tar.gz ghactiontests-*.zip > checksums.txt
+        zip -r ${{ env.PROJECT_NAME }}-${{ github.ref_name }}.zip addons/
+        tar -czvf ${{ env.PROJECT_NAME }}-${{ github.ref_name }}.tar.gz addons
+        sha256sum ${{ env.PROJECT_NAME }}-*.tar.gz ${{ env.PROJECT_NAME }}-*.zip > checksums.txt
         ls -alhR
     
     - name: Publish Release
@@ -145,6 +148,6 @@ jobs:
       with:
         body: ${{ needs.build.outputs.release_body }}
         files: |
-          ghactiontests-${{ github.ref_name }}.zip
-          ghactiontests-${{ github.ref_name }}.tar.gz
+          ${{ env.PROJECT_NAME }}-${{ github.ref_name }}.zip
+          ${{ env.PROJECT_NAME }}-${{ github.ref_name }}.tar.gz
           checksums.txt

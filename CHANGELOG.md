@@ -2,6 +2,11 @@
 
 ### ⚙️ Miscellaneous Tasks
 
+- Project name in env
+## [0.0.9] - 2026-09-22
+
+### ⚙️ Miscellaneous Tasks
+
 - Release changelog body attempt 2
 ## [0.0.8] - 2026-09-22
 
