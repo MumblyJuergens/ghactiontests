@@ -102,7 +102,7 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v7
       with:
-        name: artifact-${{ matrix.runs-on }}
+        name: ${{ matrix.output_file }}
         path: ${{ steps.strings.outputs.build-output-dir }}/${{ matrix.input_file }}
   
   release:
@@ -113,6 +113,6 @@ jobs:
       uses: actions/download-artifact@v8
       with:
         path: addons/ghactiontest
-        pattern: '*ghactiontest*'
+        pattern: 'ghactiontest*'
         merge-multiple: true
     - run: ls -alhR
