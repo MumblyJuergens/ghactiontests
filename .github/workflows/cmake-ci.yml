@@ -14,47 +14,40 @@ env:
 jobs:
 
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.target.os }}
 
     strategy:
       # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
       fail-fast: false
 
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
-        build_type: [Debug]
         include:
-          - os: windows-latest
-            platform: windows
-            arch: x86_64
+          - target: { os: windows-latest, platform: windows, arch: x86_64 }
             c_compiler: x86_64-w64-mingw32-gcc
             cpp_compiler: x86_64-w64-mingw32-g++
             extension: dll
             generator: Ninja
-          - os: ubuntu-latest
-            arch: x86_64
-            platform: linux
+            build_type: Debug
+          - target: { os: ubuntu-latest, platform: linux, arch: x86_64 }
             c_compiler: gcc
             cpp_compiler: g++
             extension: so
             generator: Ninja
-          - os: macos-latest
-            arch: x86_64
-            platform: macos
+            build_type: Debug
+          - target: {os: macos-latest, platform: macos, arch: x86_64 }
             mac_platform: MAC_CATALYST
             c_compiler: clang
             cpp_compiler: clang++
             extension: dylib
             generator: Ninja
-          - os: macos-latest
-            arch: arm64
-            platform: ios
+            build_type: Debug
+          - target: {os: macos-latest, platform: ios, arch: arm64 }
             mac_platform: OS64
             c_compiler: clang
             cpp_compiler: clang++
             extension: dylib
             generator: Ninja
-            
+            build_type: Debug
 
 
     steps:
@@ -71,26 +64,26 @@ jobs:
       uses: ssrobins/install-cmake@v1
 
     - name: Install GCC 16
-      if: matrix.os == 'ubuntu-latest'
+      if: matrix.target.os == 'ubuntu-latest'
       uses: egor-tensin/setup-gcc@v2
       with:
         version: 16
         platform: x64    
 
     - name: Install Latest MinGW
-      if: matrix.os == 'windows-latest'
+      if: matrix.target.os == 'windows-latest'
       uses: egor-tensin/setup-mingw@v3
       with:
         platform: x64
 
     - name: Verify MinGW Installation
-      if: matrix.os == 'windows-latest'
+      if: matrix.target.os == 'windows-latest'
       run: |
         x86_64-w64-mingw32-gcc --version
         x86_64-w64-mingw32-g++ --version
 
     - name: Configure CMake (Win/Lunix)
-      if: matrix.os != 'macos-latest'
+      if: matrix.target.os != 'macos-latest'
       run: >
         cmake -B ${{ steps.strings.outputs.build-output-dir }}
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
@@ -100,7 +93,7 @@ jobs:
         -G ${{ matrix.generator }}
 
     - name: Configure CMake (Mac/iOS)
-      if: matrix.os == 'macos-latest' && matrix.platform == 'ios'
+      if: matrix.target.os == 'macos-latest'
       run: >
         cmake -B ${{ steps.strings.outputs.build-output-dir }}
         -DCMAKE_TOOLCHAIN_FILE=path/to/ios.toolchain.cmake
