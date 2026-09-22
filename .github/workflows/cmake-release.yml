@@ -98,7 +98,6 @@ jobs:
       run: ctest --build-config ${{ matrix.build_type }}
 
     - name: Upload Artifact
-      working-directory: ${{ steps.strings.outputs.build-output-dir }}
       uses: actions/upload-artifact@v7
       with:
         name: ${{ matrix.output_file }}
