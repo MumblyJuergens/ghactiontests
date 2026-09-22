@@ -2,6 +2,11 @@
 
 ### ⚙️ Miscellaneous Tasks
 
+- Release changelog body attempt
+## [0.0.7] - 2026-09-22
+
+### ⚙️ Miscellaneous Tasks
+
 - Release test 2
 ## [0.0.6] - 2026-09-22
 

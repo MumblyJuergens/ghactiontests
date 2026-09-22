@@ -13,6 +13,8 @@ permissions:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    outputs:
+      release_body: ${{ steps.git-cliff.outputs.content }}
 
     strategy:
       # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
@@ -110,6 +112,16 @@ jobs:
         name: ${{ matrix.output_file }}
         path: ${{ steps.strings.outputs.build-output-dir }}/${{ matrix.output_file }}
   
+    # Only doing for one OS, save time kinda.?
+    - name: Generate a changelog
+      uses: orhun/git-cliff-action@v4
+      id: git-cliff
+      with:
+        config: cliff.toml
+        args: --latest --strip=header
+      env:
+        OUTPUT: CHANGES.md
+
   release:
     needs: build
     runs-on: ubuntu-latest
@@ -131,7 +143,7 @@ jobs:
     - name: Publish Release
       uses: softprops/action-gh-release@v3
       with:
-        body_path: CHANGELOG.md
+        body: body: ${{ needs.build.outputs.release_body }}
         files: |
           ghactiontests-${{ github.ref_name }}.zip
           ghactiontests-${{ github.ref_name }}.tar.gz
