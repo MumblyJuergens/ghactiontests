@@ -6,9 +6,6 @@ on:
     tags:
       - 'v*'
 
-env:
-  PROJECT_NAME: ghactiontests
-
 permissions:
   contents: write
   packages: write
@@ -36,18 +33,18 @@ jobs:
           - os: windows-latest
             c_compiler: x86_64-w64-mingw32-gcc
             cpp_compiler: x86_64-w64-mingw32-g++
-            input_file: lib${{ vars.PROJECT_NAME }}.dll
-            output_file: ${{ vars.PROJECT_NAME }}.windows.release.x86_64.dll
+            input_file: lib${{ vars.REPO_NAME }}.dll
+            output_file: ${{ vars.REPO_NAME }}.windows.release.x86_64.dll
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
-            input_file: ${{ vars.PROJECT_NAME }}.so
-            output_file: ${{ vars.PROJECT_NAME }}.linux.release.x86_64.so
+            input_file: ${{ vars.REPO_NAME }}.so
+            output_file: ${{ vars.REPO_NAME }}.linux.release.x86_64.so
           - os: macos-latest
             c_compiler: clang
             cpp_compiler: clang++
-            input_file: ${{ vars.PROJECT_NAME }}.dylib
-            output_file: ${{ vars.PROJECT_NAME }}.macos.release.dylib
+            input_file: ${{ vars.REPO_NAME }}.dylib
+            output_file: ${{ vars.REPO_NAME }}.macos.release.dylib
 
 
 
@@ -133,14 +130,14 @@ jobs:
     - name: Download All Artifacts
       uses: actions/download-artifact@v8
       with:
-        path: addons/${{ env.PROJECT_NAME }}
+        path: addons/${{ vars.REPO_NAME }}
         merge-multiple: true
 
     - name: Build Archives
       run: |
-        zip -r ${{ env.PROJECT_NAME }}-${{ github.ref_name }}.zip addons/
-        tar -czvf ${{ env.PROJECT_NAME }}-${{ github.ref_name }}.tar.gz addons
-        sha256sum ${{ env.PROJECT_NAME }}-*.tar.gz ${{ env.PROJECT_NAME }}-*.zip > checksums.txt
+        zip -r ${{ vars.REPO_NAME }}-${{ github.ref_name }}.zip addons/
+        tar -czvf ${{ vars.REPO_NAME }}-${{ github.ref_name }}.tar.gz addons
+        sha256sum ${{ vars.REPO_NAME }}-*.tar.gz ${{ vars.REPO_NAME }}-*.zip > checksums.txt
         ls -alhR
     
     - name: Publish Release
@@ -148,6 +145,6 @@ jobs:
       with:
         body: ${{ needs.build.outputs.release_body }}
         files: |
-          ${{ env.PROJECT_NAME }}-${{ github.ref_name }}.zip
-          ${{ env.PROJECT_NAME }}-${{ github.ref_name }}.tar.gz
+          ${{ vars.REPO_NAME }}-${{ github.ref_name }}.zip
+          ${{ vars.REPO_NAME }}-${{ github.ref_name }}.tar.gz
           checksums.txt
