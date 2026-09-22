@@ -99,11 +99,16 @@ jobs:
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest --build-config ${{ matrix.build_type }}
 
+    - name: Rename Output
+      working-directory: ${{ steps.strings.outputs.build-output-dir }}
+      shell: pwsh
+      run: Move-Item -Path ${{ matrix.input_file }} -Destination ${{ matrix.output_file }}
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v7
       with:
         name: ${{ matrix.output_file }}
-        path: ${{ steps.strings.outputs.build-output-dir }}/${{ matrix.input_file }}
+        path: ${{ steps.strings.outputs.build-output-dir }}/${{ matrix.output_file }}
   
   release:
     needs: build
