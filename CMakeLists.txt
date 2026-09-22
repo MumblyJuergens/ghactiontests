@@ -8,3 +8,6 @@ project(
 
 add_executable(ghactiontests src/main.cpp)
 target_compile_features(ghactiontests PRIVATE cxx_std_26)
+if (MINGW AND CMAKE_CXX_COMPILER_ID STREQUAL GNU)
+  target_link_libraries(ghactiontests PUBLIC stdc++exp) # std:: print, println, ...
+endif()
