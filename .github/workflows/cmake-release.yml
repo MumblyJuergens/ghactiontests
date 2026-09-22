@@ -131,7 +131,7 @@ jobs:
     - name: Publish Release
       uses: softprops/action-gh-release@v3
       with:
-        body-path: CHANGELOG.md
+        body_path: CHANGELOG.md
         files: |
           ghactiontests-${{ github.ref_name }}.zip
           ghactiontests-${{ github.ref_name }}.tar.gz

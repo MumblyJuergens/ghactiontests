@@ -2,6 +2,11 @@
 
 ### ⚙️ Miscellaneous Tasks
 
+- Release test 2
+## [0.0.6] - 2026-09-22
+
+### ⚙️ Miscellaneous Tasks
+
 - Release test 1
 ## [0.0.5] - 2026-09-22
 
