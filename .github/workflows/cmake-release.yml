@@ -31,14 +31,17 @@ jobs:
           - os: windows-latest
             c_compiler: x86_64-w64-mingw32-gcc
             cpp_compiler: x86_64-w64-mingw32-g++
+            input_file: libghactiontests.dll
             output_file: ghactiontest.windows.release.x86_64.dll
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
+            input_file: libghactiontests.so
             output_file: ghactiontest.linux.release.x86_64.so
           - os: macos-latest
             c_compiler: clang
             cpp_compiler: clang++
+            input_file: libghactiontests.dylib
             output_file: ghactiontest.macos.release.dylib
 
 
@@ -83,7 +86,6 @@ jobs:
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
-        -DGHAT_FINAL_OUTPUT=${{ matrix.output_file }}
         -S ${{ github.workspace }}
         -G Ninja
 
@@ -101,7 +103,7 @@ jobs:
       uses: actions/upload-artifact@v7
       with:
         name: ${{ matrix.output_file }}
-        path: ${{ steps.strings.outputs.build-output-dir }}/${{ matrix.output_file }}
+        path: ${{ steps.strings.outputs.build-output-dir }}/${{ matrix.input_file }}
   
   release:
     needs: build
