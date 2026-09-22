@@ -2,6 +2,11 @@
 
 ### ⚙️ Miscellaneous Tasks
 
+- Tar path fix
+## [0.0.4] - 2026-09-22
+
+### ⚙️ Miscellaneous Tasks
+
 - No ls, trying fix
 ## [0.0.3] - 2026-09-22
 
