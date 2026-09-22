@@ -31,15 +31,15 @@ jobs:
           - os: windows-latest
             c_compiler: x86_64-w64-mingw32-gcc
             cpp_compiler: x86_64-w64-mingw32-g++
-            output_file: windows/ghactiontest.windows.release.x86_64.dll
+            output_file: ghactiontest.windows.release.x86_64.dll
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
-            output_file: linux/ghactiontest.linux.release.x86_64.so
+            output_file: ghactiontest.linux.release.x86_64.so
           - os: macos-latest
             c_compiler: clang
             cpp_compiler: clang++
-            output_file: macos/ghactiontest.macos.release.dylib
+            output_file: ghactiontest.macos.release.dylib
 
 
 
