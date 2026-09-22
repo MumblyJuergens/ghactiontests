@@ -119,7 +119,6 @@ jobs:
       uses: actions/download-artifact@v8
       with:
         path: addons/ghactiontest
-        # pattern: 'ghactiontest*'
         merge-multiple: true
     - run: ls -alhR
 
@@ -128,4 +127,3 @@ jobs:
         zip -r ghactiontests-${{ github.ref_name }}.zip addons/
         tar -czvf ghactiontests-${{ github.ref_name }}.tar.gz addons .
         sha256sum ghactiontests-*.tar.gz ghactiontests-*.zip > checksums.txt
-        ls -alhR
