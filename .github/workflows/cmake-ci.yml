@@ -35,7 +35,8 @@ jobs:
             generator: Ninja
             build_type: Debug
           - target: {os: macos-latest, platform: macos, arch: x86_64 }
-            mac_platform: MAC_CATALYST
+            mac_platform: MAC
+            mac_deployment_version: 26.0
             c_compiler: clang
             cpp_compiler: clang++
             extension: dylib
@@ -43,6 +44,7 @@ jobs:
             build_type: Debug
           - target: {os: macos-latest, platform: ios, arch: arm64 }
             mac_platform: OS64
+            mac_deployment_version: 26.0
             c_compiler: clang
             cpp_compiler: clang++
             extension: dylib
@@ -98,6 +100,7 @@ jobs:
         cmake -B ${{ steps.strings.outputs.build-output-dir }}
         -DCMAKE_TOOLCHAIN_FILE=cmake/ios-cmake/ios.toolchain.cmake
         -DPLATFORM=${{ matrix.mac_platform }}
+        -DDEPLOYMENT_TARGET=${{ matrix.mac_deployment_version }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         -S ${{ github.workspace }}
         -G ${{ matrix.generator }}
