@@ -18,3 +18,6 @@ tag message version:
 
 push:
     git push origin main --follow-tags
+
+ios-cmake-pull:
+    git subtree pull --prefix=cmake/ios-cmake https://github.com/leetal/ios-cmake.git master --squash
