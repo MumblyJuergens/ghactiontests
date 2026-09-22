@@ -96,7 +96,7 @@ jobs:
       if: matrix.target.os == 'macos-latest'
       run: >
         cmake -B ${{ steps.strings.outputs.build-output-dir }}
-        -DCMAKE_TOOLCHAIN_FILE=path/to/ios.toolchain.cmake
+        -DCMAKE_TOOLCHAIN_FILE=cmake/ios-cmake/ios.toolchain.cmake
         -DPLATFORM=${{ matrix.mac_platform }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         -S ${{ github.workspace }}
