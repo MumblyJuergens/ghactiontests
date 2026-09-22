@@ -104,7 +104,7 @@ jobs:
         path: ${{ matrix.output_file }}
   
   release:
-    needs: upload
+    needs: build
     runs-on: ubuntu-latest
     steps:
     - name: Download All Artifacts
