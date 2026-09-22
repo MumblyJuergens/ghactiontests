@@ -2,7 +2,7 @@ name: CMake CI
 
 on:
   push:
-    branches: [ "main" ]
+    # branches: [ "main" ]
     tags:
       - 'v*'
 
@@ -114,6 +114,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+
     - name: Download All Artifacts
       uses: actions/download-artifact@v8
       with:
@@ -121,3 +122,10 @@ jobs:
         # pattern: 'ghactiontest*'
         merge-multiple: true
     - run: ls -alhR
+
+    - name: Build Archives
+      run: |
+        zip -r ghactiontests-${{ github.ref_name }}.zip addons/
+        tar -czvf ghactiontests-${{ github.ref_name }}.tar.gz addons .
+        sha256sum myapp-*.tar.gz myapp-*.zip > checksums.txt
+        ls -alhR
