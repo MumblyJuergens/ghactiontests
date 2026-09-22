@@ -113,6 +113,6 @@ jobs:
       uses: actions/download-artifact@v8
       with:
         path: addons/ghactiontest
-        pattern: 'ghactiontest*'
+        # pattern: 'ghactiontest*'
         merge-multiple: true
     - run: ls -alhR
