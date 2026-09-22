@@ -2,6 +2,11 @@
 
 ### ⚙️ Miscellaneous Tasks
 
+- Project name in env or vars
+## [ersion] - 2026-09-22
+
+### ⚙️ Miscellaneous Tasks
+
 - Project name in env
 ## [0.0.9] - 2026-09-22
 

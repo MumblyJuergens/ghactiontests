@@ -36,18 +36,18 @@ jobs:
           - os: windows-latest
             c_compiler: x86_64-w64-mingw32-gcc
             cpp_compiler: x86_64-w64-mingw32-g++
-            input_file: lib${{ env.PROJECT_NAME }}.dll
-            output_file: ${{ env.PROJECT_NAME }}.windows.release.x86_64.dll
+            input_file: lib${{ vars.PROJECT_NAME }}.dll
+            output_file: ${{ vars.PROJECT_NAME }}.windows.release.x86_64.dll
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
-            input_file: ${{ env.PROJECT_NAME }}.so
-            output_file: ${{ env.PROJECT_NAME }}.linux.release.x86_64.so
+            input_file: ${{ vars.PROJECT_NAME }}.so
+            output_file: ${{ vars.PROJECT_NAME }}.linux.release.x86_64.so
           - os: macos-latest
             c_compiler: clang
             cpp_compiler: clang++
-            input_file: ${{ env.PROJECT_NAME }}.dylib
-            output_file: ${{ env.PROJECT_NAME }}.macos.release.dylib
+            input_file: ${{ vars.PROJECT_NAME }}.dylib
+            output_file: ${{ vars.PROJECT_NAME }}.macos.release.dylib
 
 
 
