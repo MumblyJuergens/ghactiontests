@@ -39,14 +39,14 @@ jobs:
             c_compiler: clang
             cpp_compiler: clang++
             extension: dylib
-            generator: Ninja
+            generator: Xcode
             build_type: Debug
           - target: {os: macos-latest, platform: ios, arch: arm64 }
             mac_platform: OS64
             c_compiler: clang
             cpp_compiler: clang++
             extension: dylib
-            generator: Ninja
+            generator: Xcode
             build_type: Debug
 
 
