@@ -2,7 +2,7 @@
 # Extracting the name from the repo is possible, but tricky to use in every spot
 # and the library name might not be the same as the repo, so this is how it is.
 
-name: CMake CI
+name: CMake Release
 
 on:
   push:
