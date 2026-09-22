@@ -120,7 +120,6 @@ jobs:
       with:
         path: addons/ghactiontest
         merge-multiple: true
-    - run: ls -alhR
 
     - name: Build Archives
       run: |
@@ -128,3 +127,12 @@ jobs:
         tar -czvf ghactiontests-${{ github.ref_name }}.tar.gz addons
         sha256sum ghactiontests-*.tar.gz ghactiontests-*.zip > checksums.txt
         ls -alhR
+    
+    - name: Publish Release
+      uses: softprops/action-gh-release@v3
+      with:
+        body-path: CHANGELOG.md
+        files: |
+          ghactiontests-${{ github.ref_name }}.zip
+          ghactiontests-${{ github.ref_name }}.tar.gz
+          checksums.txt
