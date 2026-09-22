@@ -104,7 +104,7 @@ jobs:
       run: >
         cmake -B ${{ steps.strings.outputs.build-output-dir }}
         -DCMAKE_TOOLCHAIN_FILE=path/to/ios.toolchain.cmake
-        -DPLATFORM=${{ matric.mac_platform }}
+        -DPLATFORM=${{ matrix.mac_platform }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         -S ${{ github.workspace }}
         -G ${{ matrix.generator }}
