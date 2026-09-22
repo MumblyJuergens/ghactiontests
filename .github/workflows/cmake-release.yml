@@ -1,3 +1,7 @@
+# IMPORTANT: Must set a base name for REPO_NAME in the repositories variables.
+# Extracting the name from the repo is possible, but tricky to use in every spot
+# and the library name might not be the same as the repo, so this is how it is.
+
 name: CMake CI
 
 on:
@@ -6,11 +10,15 @@ on:
     tags:
       - 'v*'
 
+env:
+  REPO_NAME: ghactiontests
+
 permissions:
   contents: write
   packages: write
 
 jobs:
+
   build:
     runs-on: ${{ matrix.os }}
     outputs:
@@ -20,32 +28,27 @@ jobs:
       # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
       fail-fast: false
 
-      # Set up a matrix to run the following 3 configurations:
-      # 1. <Windows, Release, latest MSVC compiler toolchain on the default runner image, default generator>
-      # 2. <Linux, Release, latest GCC compiler toolchain on the default runner image, default generator>
-      # 3. <Linux, Release, latest Clang compiler toolchain on the default runner image, default generator>
-      #
-      # To add more build types (Release, Debug, RelWithDebInfo, etc.) customize the build_type list.
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
         build_type: [Release]
         include:
           - os: windows-latest
+            platform: windows
+            arch: x86_64
             c_compiler: x86_64-w64-mingw32-gcc
             cpp_compiler: x86_64-w64-mingw32-g++
-            input_file: lib${{ vars.REPO_NAME }}.dll
-            output_file: ${{ vars.REPO_NAME }}.windows.release.x86_64.dll
+            extension: dll
           - os: ubuntu-latest
+            arch: x86_64
+            platform: linux
             c_compiler: gcc
             cpp_compiler: g++
-            input_file: lib${{ vars.REPO_NAME }}.so
-            output_file: ${{ vars.REPO_NAME }}.linux.release.x86_64.so
+            extension: so
           - os: macos-latest
+            arch: x86_64
+            platform: macos
             c_compiler: clang
             cpp_compiler: clang++
-            input_file: lib${{ vars.REPO_NAME }}.dylib
-            output_file: ${{ vars.REPO_NAME }}.macos.release.dylib
-
+            extension: dylib
 
 
     steps:
@@ -57,6 +60,8 @@ jobs:
       shell: bash
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+        echo "input_file=lib${{ var.REPO_NAME }}.${{ matrix.extension }}" >> "$GITHUB_OUTPUT"
+        echo "output_file=${{ var.REPO_NAME }}.${{ matrix.build_type }}.${{ matrix.arch }}.${{ matrix.extension }}" >> "$GITHUB_OUTPUT"
 
     - name: Install Latest CMake
       uses: ssrobins/install-cmake@v1
@@ -104,13 +109,13 @@ jobs:
     - name: Rename Output
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       shell: pwsh
-      run: Move-Item -Path ${{ matrix.input_file }} -Destination ${{ matrix.output_file }}
+      run: Move-Item -Path ${{ steps.strings.outputs.input_file }} -Destination ${{ steps.strings.outputs.output_file }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v7
       with:
-        name: ${{ matrix.output_file }}
-        path: ${{ steps.strings.outputs.build-output-dir }}/${{ matrix.output_file }}
+        name: ${{ steps.strings.outputs.output_file }}
+        path: ${{ steps.strings.outputs.build-output-dir }}/${{ steps.strings.outputs.output_file }}
   
     # Only doing for one OS, save time kinda.?
     - name: Generate a changelog
