@@ -2,6 +2,11 @@
 
 ### ⚙️ Miscellaneous Tasks
 
+- Matrix changes fix
+## [0.0.14] - 2026-09-22
+
+### ⚙️ Miscellaneous Tasks
+
 - Matrix changes
 ## [0.0.13] - 2026-09-22
 

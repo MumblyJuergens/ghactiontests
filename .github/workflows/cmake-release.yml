@@ -60,8 +60,8 @@ jobs:
       shell: bash
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-        echo "input_file=lib${{ var.REPO_NAME }}.${{ matrix.extension }}" >> "$GITHUB_OUTPUT"
-        echo "output_file=${{ var.REPO_NAME }}.${{ matrix.build_type }}.${{ matrix.arch }}.${{ matrix.extension }}" >> "$GITHUB_OUTPUT"
+        echo "input_file=lib${{ vars.REPO_NAME }}.${{ matrix.extension }}" >> "$GITHUB_OUTPUT"
+        echo "output_file=${{ vars.REPO_NAME }}.${{ matrix.build_type }}.${{ matrix.arch }}.${{ matrix.extension }}" >> "$GITHUB_OUTPUT"
 
     - name: Install Latest CMake
       uses: ssrobins/install-cmake@v1
