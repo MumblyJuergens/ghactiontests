@@ -18,11 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: kenchan0130/actions-system-info@v1.5.0
-        id: system-info
+      - name: Detect OS
+        uses: ./.github/actions/detect-os
 
       - name: Download Godot
         uses: ./.github/actions/download-godot
         with:
           godot-version: 4.7.2
-          platform: ${{ steps.system-info.outputs.platform }}
+          platform: ${{ steps.detect-os.outputs.platform }}

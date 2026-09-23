@@ -1,0 +1,67 @@
+# Parts based on https://github.com/lexbritvin/os-info-action/blob/main/action.yml
+
+name: Detect OS
+description: 'Detect the system OS'
+
+outputs:
+  platform:
+    description: 'OS Name (linux/windows/macos)'
+    value: ${{ steps.collect-info.outputs.platform }}
+  architecture:
+    description: 'System Architecture (x86_64, etc)'
+    value: ${{ steps.collect-info.outputs.architecture }}
+
+runs:
+  using: composite
+  steps:
+    - name: Detect OS
+      id: detect-os
+      shell: bash
+      run: |
+        OS_NAME=""
+        ARCHITECTURE=""
+        
+        # Detect OS and collect information
+        if [[ "${{ runner.os }}" == "Linux" ]]; then
+          OS_NAME="linux"
+          RAW_ARCH=$(uname -m)        
+        elif [[ "${{ runner.os }}" == "macOS" ]]; then
+          OS_NAME="macos"
+          RAW_ARCH=$(uname -m)        
+        elif [[ "${{ runner.os }}" == "Windows" ]]; then
+          OS_NAME="windows"
+          if command -v systeminfo &> /dev/null; then
+            RAW_ARCH=$(systeminfo | grep "System Type" | cut -d: -f2 | xargs)
+          else
+            RAW_ARCH="x64-based PC"  # Default assumption
+          fi
+        fi
+        
+        # Normalize architecture across platforms
+        case "$RAW_ARCH" in
+          "x86_64"|"amd64"|"x64-based PC"|"AMD64")
+            ARCHITECTURE="x86_64"
+            ;;
+          "aarch64"|"arm64"|"ARM64-based PC")
+            ARCHITECTURE="arm64"
+            ;;
+          "i386"|"i686"|"x86-based PC"|"X86")
+            ARCHITECTURE="x86"
+            ;;
+          "armv7l"|"armv6l")
+            ARCHITECTURE="arm"
+            ;;
+          *)
+            ARCHITECTURE="$RAW_ARCH"  # Keep original if unknown
+            ;;
+        esac
+        
+        # Set individual outputs
+        echo "platform=$OS_NAME" >> $GITHUB_OUTPUT
+        echo "architecture=$ARCHITECTURE" >> $GITHUB_OUTPUT
+
+    - name: Display OS
+      shell: bash
+      run: |
+        echo "Platform: ${{ steps.collect-info.outputs.os-name }}"
+        echo "Architecture: ${{ steps.collect-info.outputs.architecture }}"
