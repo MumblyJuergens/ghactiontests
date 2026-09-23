@@ -8,6 +8,13 @@ on:
 
 jobs:
   prepare:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        
     steps:
       - name: Download Godot
         uses: ./github/actions/download-godot
