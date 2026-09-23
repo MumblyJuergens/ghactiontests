@@ -19,7 +19,7 @@ inputs:
     required: true
     default: '${{ github.workspace }}/godotbinary'
   platform:
-    description: "The OS for the Godot binary (e.g. 'linux'"
+    description: "The OS for the Godot binary (e.g. 'linux')"
     type: string
     required: true
     default: 'linux'
@@ -32,7 +32,7 @@ runs:
       shell: bash
       run: |
 
-        echo "Downloading Godot ${{ inputs.godot-version}} ${{ inputs.godot-release-type}} for ${{ inputs.os }}"
+        echo "Downloading Godot ${{ inputs.godot-version}} ${{ inputs.godot-release-type}} for ${{ inputs.platform }}"
 
         # Make the directory to install Godot to.
         # mkdir -p ${{ inputs.install-path }}
