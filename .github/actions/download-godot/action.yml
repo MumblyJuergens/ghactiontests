@@ -14,7 +14,7 @@ inputs:
     required: true
     default: 'stable'
   install-path:
-    description: "Where the Godot binary is installed (e.g. '${{ github.workspace }}/godotbinary')
+    description: "Where the Godot binary is installed (e.g. at godotbinary directory in your godot.workspace path)')
     type: string
     required: true
     default: '${{ github.workspace }}/godotbinary'
