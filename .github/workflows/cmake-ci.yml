@@ -116,8 +116,9 @@ jobs:
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest --build-config ${{ matrix.build_type }}
 
-    - name: GDUint4 Tests
-      # if: matrix.target.os == 'ubuntu-latest'
+    # Sadly this craps out on mac and windows.
+    - name: GDUnit4 Tests
+      if: matrix.target.os == 'ubuntu-latest'
       uses: godot-gdunit-labs/gdUnit4-action@v1
       with:
         godot-version: '4.7.2'

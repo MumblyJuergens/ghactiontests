@@ -1,0 +1,49 @@
+# Parts based on https://github.com/godot-gdunit-labs/gdUnit4-action/blob/master/.gdunit4_action/godot-install/action.yml
+
+name: install-godot
+description: 'Installs Godot'
+
+inputs:
+  godot-version:
+    description: 'The Godot version (e.g. 4.7.2)'
+    type: string
+    required: true
+  godot-release-type:
+    description: "The type of the release (e.g. 'stable')"
+    type: string
+    required: true
+    default: 'stable'
+  install-path:
+    description: "Where the Godot binary is installed (e.g. '${{ github.workspace }}/godotbinary')
+    type: string
+    required: true
+    default: '${{ github.workspace }}/godotbinary'
+  os:
+    description: "The OS for the Godot binary (e.g. ${{ github.runner-os }})"
+    type: string
+    required: true
+    default: ${{ github.runner-os }}
+
+runs:
+  using: composite
+  steps:
+    - name: 'Download Godot ${{ inputs.godot-version }}-${{ inputs.godot-release-type }}'
+      # TODO: cache step.
+      shell: bash
+      run: |
+
+        echo "Downloading Godot ${{ inputs.godot-version}} ${{ inputs.godot-release-type}} for ${{ inputs.os }}"
+
+        # Make the directory to install Godot to.
+        # mkdir -p ${{ inputs.install-path }}
+        # chmod 770 ${{ inputs.install-path }}
+
+        # Make the config directory for Godot. TODO: Test if necessary.
+        # GODOT_CONFIG="$HOME/.config/godot"
+        # if [ ! -d "$GODOT_CONFIG" ]; then
+          # mkdir -p "GODOT_CONFIG"
+          # chmod 770 "$GODOT_CONFIG"
+        # fi
+
+        # DOWNLOAD_URL=https://github.com/godotengine/godot-builds/releases/download/${{ inputs.godot-version }}-${{ inputs.godot-status-version }}
+

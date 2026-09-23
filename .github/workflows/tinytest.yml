@@ -1,0 +1,15 @@
+# Testing for teeny tiny CI bits.
+
+name: Tinytest
+
+on:
+  push:
+    branches: [ 'tinytest/**' ]
+
+jobs:
+  prepare:
+    steps:
+      - name: Download Godot
+        uses: ./github/actions/download-godot
+        with:
+          godot-version: 4.7.2
