@@ -18,11 +18,11 @@ inputs:
     type: string
     required: true
     default: '${{ github.workspace }}/godotbinary'
-  os:
-    description: "The OS for the Godot binary (e.g. ${{ github.runner-os }})"
+  platform:
+    description: "The OS for the Godot binary (e.g. 'linux'"
     type: string
     required: true
-    default: ${{ github.runner-os }}
+    default: 'linux'
 
 runs:
   using: composite
