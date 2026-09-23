@@ -14,9 +14,11 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
-        
+
     steps:
+      - uses: actions/checkout@v7
+
       - name: Download Godot
-        uses: ./github/actions/download-godot
+        uses: ./.github/actions/download-godot
         with:
           godot-version: 4.7.2
