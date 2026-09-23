@@ -20,9 +20,10 @@ jobs:
 
       - name: Detect OS
         uses: ./.github/actions/detect-os
+        id: detct-os
 
       - name: Download Godot
         uses: ./.github/actions/download-godot
         with:
           godot-version: 4.7.2
-          platform: ${{ steps.detect-os.outputs.platform }}
+          platform: ${{ steps.detect-os.outputs.godot-os }}
