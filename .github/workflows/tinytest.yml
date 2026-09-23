@@ -20,7 +20,7 @@ jobs:
 
       - name: Detect OS
         uses: ./.github/actions/detect-os
-        id: detct-os
+        id: detect-os
 
       - name: Download Godot
         uses: ./.github/actions/download-godot
