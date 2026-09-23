@@ -6,10 +6,10 @@ description: 'Detect the system OS'
 outputs:
   platform:
     description: 'OS Name (linux/windows/macos)'
-    value: ${{ steps.collect-info.outputs.platform }}
+    value: ${{ steps.detect-os.outputs.platform }}
   architecture:
     description: 'System Architecture (x86_64, etc)'
-    value: ${{ steps.collect-info.outputs.architecture }}
+    value: ${{ steps.detect-os.outputs.architecture }}
 
 runs:
   using: composite
@@ -63,5 +63,5 @@ runs:
     - name: Display OS
       shell: bash
       run: |
-        echo "Platform: ${{ steps.collect-info.outputs.os-name }}"
-        echo "Architecture: ${{ steps.collect-info.outputs.architecture }}"
+        echo "Platform: ${{ steps.detect-os.outputs.os-name }}"
+        echo "Architecture: ${{ steps.detect-os.outputs.architecture }}"
