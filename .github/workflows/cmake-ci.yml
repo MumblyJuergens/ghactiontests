@@ -108,7 +108,7 @@ jobs:
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
-      run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }} --verbose
+      run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
 
     - name: Test
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
@@ -117,8 +117,10 @@ jobs:
       run: ctest --build-config ${{ matrix.build_type }}
 
     - name: GDUint4 Tests
+      # if: matrix.target.os == 'ubuntu-latest'
       uses: godot-gdunit-labs/gdUnit4-action@v1
       with:
         godot-version: '4.7.2'
         project_dir: './gdapp/'
         paths: 'res://test'
+        publish-report: false
