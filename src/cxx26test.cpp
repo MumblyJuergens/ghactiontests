@@ -1,5 +1,5 @@
 #include <print>
 
-int main() {
+void cxx26test() {
     std::println("Working");
 }
