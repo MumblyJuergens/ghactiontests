@@ -76,7 +76,7 @@ runs:
         # fi
 
         GODOT_SHORTVERSION=${{ inputs.godot-version }}-${{ inputs.godot-release-type }}
-        GODOT_FILENAME="Godot_v${GODOT_SHORTVERSION}_${{ inputs.platform }}_$GODOT_OS"
+        GODOT_FILENAME="Godot_v${GODOT_SHORTVERSION}_$GODOT_OS"
         GODOT_DL_ZIPNAME="$GODOT_FILENAME.zip"
         if [[ "${{ inputs.platform  }}" == "macos" ]]; then
           GODOT_EXE="Godot.app"
