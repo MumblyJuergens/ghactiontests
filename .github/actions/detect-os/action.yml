@@ -12,6 +12,7 @@ outputs:
     value: ${{ steps.detect-os.outputs.architecture }}
   godot-os:
     description: 'The file extension needed to download Godot'
+    value: ${{ steps.detect-os.outputs.godot-os }}
 
 runs:
   using: composite

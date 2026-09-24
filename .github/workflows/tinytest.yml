@@ -26,4 +26,4 @@ jobs:
         uses: ./.github/actions/download-godot
         with:
           godot-version: 4.7.2
-          platform: ${{ steps.detect-os.outputs.architecture }}
+          platform: ${{ steps.detect-os.outputs.godot-os }}
