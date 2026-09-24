@@ -92,7 +92,7 @@ runs:
         cd -
 
         run_godot() {
-          if [[ "${{ inputs.platform}}" == "macos"]]; then
+          if [[ "${{ inputs.platform }}" == "macos"]]; then
             open -n ${{ inputs.install-path }}/$GODOT_EXE $@
           else
             ${{ inputs.install-path }}/$GODOT_EXE $@
