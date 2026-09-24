@@ -90,4 +90,13 @@ runs:
         curl -L -O "$GODOT_DL_URL"
         unzip "$GODOT_DL_ZIPNAME"
         cd -
-        ${{ inputs.install-path }}/$GODOT_EXE --version
+
+        run_godot() {
+          if [[ "${{ inputs.platform}}" == "macos"]]; then
+            open -n ${{ inputs.install-path }}/$GODOT_EXE $@
+          else
+            ${{ inputs.install-path }}/$GODOT_EXE $@
+          fi
+        }
+
+        run_godot --version
