@@ -57,7 +57,7 @@ runs:
         GODOT_DL_URL="https://github.com/godotengine/godot/releases/download/$GODOT_SHORTVERSION/$GODOT_DL_ZIPNAME"
         cd ${{ inputs.install-path }}
         echo "Pretend - Download $GODOT_DL_ZIPNAME from $GODOT_DL_URL"
-        curl --remote-name "$GODOT_DL_URL"
+        wcurl "$GODOT_DL_URL"
         unzip "$GODOT_DL_ZIPNAME"
         cd -
         mv "$GODOT_EXECUTABLE" "$GODOT_RUN"
