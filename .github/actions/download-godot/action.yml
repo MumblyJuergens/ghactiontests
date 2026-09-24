@@ -79,7 +79,7 @@ runs:
         GODOT_FILENAME="Godot_v${GODOT_SHORTVERSION}_$GODOT_OS"
         GODOT_DL_ZIPNAME="$GODOT_FILENAME.zip"
         if [[ "${{ inputs.platform  }}" == "macos" ]]; then
-          GODOT_EXE="Godot.app"
+          GODOT_EXE="Godot.app/Contents/MacOS/Godot"
         else
           GODOT_EXE="$GODOT_FILENAME"
         fi
@@ -92,7 +92,7 @@ runs:
         cd -
 
         run_godot() {
-          if [[ "${{ inputs.platform }}" == "macos" ]]; then
+          if [[ "${{ inputs.platform }}" == "macosasasasa" ]]; then
             # Usage: open [-e] [-t] [-f] [-W] [-R] [-n] [-g] [-h] [-s <partial SDK name>][-b <bundle identifier>] [-a <application>] [-u URL] [filenames] [--args arguments]
             # Help: Open opens files from a shell.
             #       By default, opens each file using the default application for that file.  
