@@ -50,17 +50,17 @@ runs:
         GODOT_FILENAME="Godot_v${GODOT_SHORTVERSION}_${{ inputs.platform }}"
         GODOT_DL_ZIPNAME="$GODOT_FILENAME.zip"
         GODOT_EXECUTABLE="${{ inputs.install-path }}/$GODOT_FILENAME"
-        GODOT_RUN="${{ inputs.install-path }}/godot"
+        GODOT_RUN="godot"
         if [[ "$GODOT_EXECUTABLE" == *".exe" ]]; then
           GODOT_RUN="$GODOT_RUN.exe"
         fi
         GODOT_DL_URL="https://github.com/godotengine/godot/releases/download/$GODOT_SHORTVERSION/$GODOT_DL_ZIPNAME"
         cd ${{ inputs.install-path }}
         echo "Pretend - Download $GODOT_DL_ZIPNAME from $GODOT_DL_URL"
-        wcurl "$GODOT_DL_URL"
+        curl -L -O "$GODOT_DL_URL"
         unzip "$GODOT_DL_ZIPNAME"
+        mv "$GODOT_FILENAME" "$GODOT_RUN"
         cd -
-        mv "$GODOT_EXECUTABLE" "$GODOT_RUN"
-        $GODOT_FILENAME --version
+        ${{ inputs.instal_path }}/$GODOT_RUN --version
 
 
