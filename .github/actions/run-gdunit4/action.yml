@@ -34,5 +34,7 @@ runs:
         echo "GODOT_BIN = $GODOT_BIN"
         
         cd "${{ github.workspace }}/${{ inputs.project-path }}"
+        # https://github.com/godot-gdunit-labs/gdUnit4/issues/876
+        $GODOT_BIN --headless --path . --import --quit
         chmod +x "${{ inputs.gdunit-path }}/runtest.sh"
         "${{ inputs.gdunit-path }}/runtest.sh" -a "${{ inputs.tests-path }} --headless --ignoreHeadlessMode"
