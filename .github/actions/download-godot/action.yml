@@ -52,7 +52,7 @@ runs:
             esac ;;
           "linux")
             case "${{ inputs.architecture }}" in
-              "x86_64") GODOT_OS="linux.x86_46" ;;
+              "x86_64") GODOT_OS="linux.x86_64" ;;
               "x86") GODOT_OS="linux.x86_32" ;;
               "arm64") GODOT_OS="linux.arm64" ;;
               "arm") GODOT_OS="linux.arm32" ;;
@@ -91,5 +91,3 @@ runs:
         unzip "$GODOT_DL_ZIPNAME"
         cd -
         ${{ inputs.install-path }}/$GODOT_EXE --version
-
-
