@@ -28,3 +28,10 @@ jobs:
           godot-version: 4.7.2
           platform: ${{ steps.detect-os.outputs.platform }}
           architecture: ${{ steps.detect-os.outputs.architecture }}
+      
+      - name: Run GDUnit Tests
+        uses: ./.github/actions/run-gdunit4
+        with:
+          godot-exe: ${{ download-godot.godot-exe }}
+          project-path: gdapp
+          

@@ -1,0 +1,36 @@
+name: Run GDUnit4
+description: Runs GDUnit4, all tests
+
+inputs:
+  godot-exe:
+    description: Full path and executable of the Godot binary
+    type: string
+    required: true
+  project-path:
+    description: The path of your Godot project
+    type: string
+    default: ''
+  gdunit-path:
+    description: The path of the GDunit4 addon
+    type: string
+    default: ./addons/gdUnit4
+  tests-path:
+    description: The path in your project to the tests
+    type: string
+    default: test
+
+runs:
+  using: composite
+  steps:
+    - name: 'Run GDUnit4 in Bash'
+      id: run-gdunit4
+      shell: bash
+      run: |
+        # Strict mode.
+        set -euo pipefail
+        IFS=$'\n\t'
+
+        export GODOT_BIN="${{ inputs.godot-exe }}"
+        
+        cd "${{ github.workspace }}/${{ inputs.project-path }}
+        "${{ inputs.gdunit-path }}/runtest.sh" -a "${{ inputs.tests-path }}"
