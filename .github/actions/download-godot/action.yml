@@ -20,11 +20,15 @@ inputs:
     required: true
     default: '${{ github.workspace }}/godotbinary'
   platform:
-    description: "The Godot download file ending (linux.x86_64, macos.univeral, win64.exe)"
+    description: "The Godot download file ending (linux, macos, windows)"
     type: string
     required: true
-    default: 'linux.x86_64'
-
+    default: 'linux'
+  architecture:
+    description: 'The architecture to use (x86, x86_64, arm, arm64)'
+    type: string
+    required: true
+    default: 'x86_64'
 runs:
   using: composite
   steps:
@@ -32,6 +36,31 @@ runs:
       # TODO: cache step.
       shell: bash
       run: |
+        # Strict mode.
+        set -euo pipefail
+        IFS=$'\n\t'
+
+        GODOT_OS=""
+        GODOT_EXE=""
+
+        case "${{ inputs.platform }}" in
+          "windows")
+            case "${{ inputs.architecture }}" in
+              "x86_64") GODOT_OS="win64.exe" ;;
+              "x86") GODOT_OS="win32.exe" ;;
+              "arm64") GODOT_OS="windows_arm64" ;;
+            esac ;;
+          "linux")
+            case "${{ inputs.architecture }}" in
+              "x86_64") GODOT_OS="linux.x86_46" ;;
+              "x86") GODOT_OS="linux.x86_32" ;;
+              "arm64") GODOT_OS="linux.arm64" ;;
+              "arm") GODOT_OS="linux.arm32" ;;
+            esac ;;
+          "macos")
+            GODOT_OS="macos.universal" ;;
+        esac
+
 
         echo "Downloading Godot ${{ inputs.godot-version}} ${{ inputs.godot-release-type}} for ${{ inputs.platform }}"
 
@@ -49,18 +78,18 @@ runs:
         GODOT_SHORTVERSION=${{ inputs.godot-version }}-${{ inputs.godot-release-type }}
         GODOT_FILENAME="Godot_v${GODOT_SHORTVERSION}_${{ inputs.platform }}"
         GODOT_DL_ZIPNAME="$GODOT_FILENAME.zip"
-        GODOT_EXECUTABLE="${{ inputs.install-path }}/$GODOT_FILENAME"
-        GODOT_RUN="godot"
-        if [[ "$GODOT_EXECUTABLE" == *".exe" ]]; then
-          GODOT_RUN="$GODOT_RUN.exe"
+        if [[ "${{ inputs.platform  }}" == "macos" ]]; then
+          GODOT_EXE="Godot.app"
+        else
+          GODOT_EXE="$GODOT_FILENAME"
         fi
+        
         GODOT_DL_URL="https://github.com/godotengine/godot/releases/download/$GODOT_SHORTVERSION/$GODOT_DL_ZIPNAME"
         cd ${{ inputs.install-path }}
         echo "Pretend - Download $GODOT_DL_ZIPNAME from $GODOT_DL_URL"
         curl -L -O "$GODOT_DL_URL"
         unzip "$GODOT_DL_ZIPNAME"
-        mv "$GODOT_FILENAME" "$GODOT_RUN"
         cd -
-        ${{ inputs.instal_path }}/$GODOT_RUN --version
+        ${{ inputs.install-path }}/$GODOT_EXE --version
 
 

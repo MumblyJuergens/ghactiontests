@@ -10,9 +10,6 @@ outputs:
   architecture:
     description: 'System Architecture (x86_64, etc)'
     value: ${{ steps.detect-os.outputs.architecture }}
-  godot-os:
-    description: 'The file extension needed to download Godot'
-    value: ${{ steps.detect-os.outputs.godot-os }}
 
 runs:
   using: composite
@@ -23,7 +20,6 @@ runs:
       run: |
         OS_NAME=""
         ARCHITECTURE=""
-        GODOT_OS=""
         
         # Detect OS and collect information
         if [[ "${{ runner.os }}" == "Linux" ]]; then
@@ -60,37 +56,15 @@ runs:
             ;;
         esac
         
-        if [[ "$OS_NAME" == "windows" ]]; then
-          if [[ "$ARCHITECTURE" == "x86_64" ]]; then
-            GODOT_OS="win64.exe"
-          elif [[ "$ARCHITECTURE" == "x86" ]]; then
-            GODOT_OS="win32.exe"
-          elif [[ "$ARCHITECTURE" == "arm64" ]]; then
-            GODOT_OS="windows_arm64"
-          fi
-        elif [[ "$OS_NAME" == "linux" ]]; then
-          if [[ "$ARCHITECTURE" == "x86_64" ]]; then
-            GODOT_OS="linux.x86_64"
-          elif [[ "$ARCHITECTURE" == "x86" ]]; then
-            GODOT_OS="linux.x86_32"
-          elif [[ "$ARCHITECTURE" == "arm64" ]]; then
-            GODOT_OS="linux.arm64"
-          elif [[ "$ARCHITECTURE" == "arm" ]]; then
-            GODOT_OS="linux.arm32"
-          fi
-        elif [[ "$OS_NAME" == "macos" ]]; then
-            GODOT_OS="macos.universal"
-        fi
+
 
 
         # Set individual outputs
         echo "platform=$OS_NAME" >> $GITHUB_OUTPUT
         echo "architecture=$ARCHITECTURE" >> $GITHUB_OUTPUT
-        echo "godot-os=$GODOT_OS" >> $GITHUB_OUTPUT
 
     - name: Display OS
       shell: bash
       run: |
         echo "Platform: ${{ steps.detect-os.outputs.platform }}"
         echo "Architecture: ${{ steps.detect-os.outputs.architecture }}"
-        echo "Godot OS: ${{ steps.detect-os.outputs.godot-os }}"
