@@ -33,7 +33,7 @@ inputs:
 outputs:
   godot-exe:
     description: 'Path and executable for Godot'
-    value: ${{ steps.download-godot.godot-exe }}
+    value: ${{ steps.download-godot.outputs.godot-exe }}
 
 runs:
   using: composite
