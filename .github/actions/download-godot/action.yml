@@ -36,8 +36,8 @@ runs:
         echo "Downloading Godot ${{ inputs.godot-version}} ${{ inputs.godot-release-type}} for ${{ inputs.platform }}"
 
         # Make the directory to install Godot to.
-        # mkdir -p ${{ inputs.install-path }}
-        # chmod 770 ${{ inputs.install-path }}
+        mkdir -p ${{ inputs.install-path }}
+        chmod 770 ${{ inputs.install-path }}
 
         # Make the config directory for Godot. TODO: Test if necessary.
         # GODOT_CONFIG="$HOME/.config/godot"
@@ -46,10 +46,16 @@ runs:
           # chmod 770 "$GODOT_CONFIG"
         # fi
 
-        GODOT_DL_FILENAME="$Godot_v{{ inputs.godot-version }}-${{ inputs.godot-release-type }}_${{ inputs.platform }}.zip"
+        GODOT_DL_FILENAME="Godot_v${{ inputs.godot-version }}-${{ inputs.godot-release-type }}_${{ inputs.platform }}.zip"
         GODOT_DL_URL="https://github.com/godotengine/godot-builds/releases/download/$GODOT_DL_FILENAME"
 
+        echo "Current at $(pwd)"
+        cd ${{ install-path }}
+        echo "Current at $(pwd)"
         echo "Pretend - Download $GODOT_DL_FILENAME from $GODOT_DL_URL"
-        curl --version
+        # curl --remote-name "$GODOT_DL_URL"
+        cd -
+        echo "Current at $(pwd)"
+        unzip --version
 
 
