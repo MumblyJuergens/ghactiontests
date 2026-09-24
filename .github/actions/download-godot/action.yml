@@ -98,5 +98,6 @@ runs:
         unzip "$GODOT_DL_ZIPNAME"
         cd -
 
+        echo "godot-exe=${{ inputs.install-path }}/$GODOT_EXE"
         echo "godot-exe=${{ inputs.install-path }}/$GODOT_EXE" >> $GITHUB_OUTPUT
 
