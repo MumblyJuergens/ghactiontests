@@ -35,4 +35,4 @@ runs:
         
         cd "${{ github.workspace }}/${{ inputs.project-path }}"
         chmod +x "${{ inputs.gdunit-path }}/runtest.sh"
-        "${{ inputs.gdunit-path }}/runtest.sh" -a "${{ inputs.tests-path }} --auto-servernum --audio-driver Dummy --display-driver x11 --rendering-driver opengl3 --single-window --continue"
+        "${{ inputs.gdunit-path }}/runtest.sh" -a "${{ inputs.tests-path }} --headless --ignoreHeadlessMode"
