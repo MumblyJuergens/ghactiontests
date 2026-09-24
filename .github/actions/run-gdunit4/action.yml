@@ -34,4 +34,5 @@ runs:
         
         cd "${{ github.workspace }}/${{ inputs.project-path }}"
         chmod +x "${{ inputs.gdunit-path }}/runtest.sh"
+        ls -al ${{ inputs.gdunit-path }}/runtest.sh
         "${{ inputs.gdunit-path }}/runtest.sh" -a "${{ inputs.tests-path }}"
