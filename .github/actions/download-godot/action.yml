@@ -46,10 +46,10 @@ runs:
           # chmod 770 "$GODOT_CONFIG"
         # fi
 
-        GODOT_DL_FILENAME="${{ inputs.godot-version }}-${{ inputs.godot-release-type }}_${{ inputs.version }}.zip"
+        GODOT_DL_FILENAME="$Godot_v{{ inputs.godot-version }}-${{ inputs.godot-release-type }}_${{ inputs.platform }}.zip"
         GODOT_DL_URL="https://github.com/godotengine/godot-builds/releases/download/$GODOT_DL_FILENAME"
 
         echo "Pretend - Download $GODOT_DL_FILENAME from $GODOT_DL_URL"
-        wget --version
+        curl --version
 
 
