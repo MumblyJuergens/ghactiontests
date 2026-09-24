@@ -46,15 +46,15 @@ runs:
           # chmod 770 "$GODOT_CONFIG"
         # fi
 
-        GODOT_FILENAME="Godot_v${{ inputs.godot-version }}-${{ inputs.godot-release-type }}_${{ inputs.platform }}"
+        GODOT_SHORTVERSION=${{ inputs.godot-version }}-${{ inputs.godot-release-type }}
+        GODOT_FILENAME="Godot_v${GODOT_SHORTVERSION}_${{ inputs.platform }}"
         GODOT_DL_ZIPNAME="$GODOT_FILENAME.zip"
         GODOT_EXECUTABLE="${{ inputs.install-path }}/$GODOT_FILENAME"
         GODOT_RUN="${{ inputs.install-path }}/godot"
         if [[ "$GODOT_EXECUTABLE" == *".exe" ]]; then
           GODOT_RUN="$GODOT_RUN.exe"
         fi
-        GODOT_DL_URL="https://github.com/godotengine/godot-builds/releases/download/$GODOT_DL_ZIPNAME"
-
+        GODOT_DL_URL="https://github.com/godotengine/godot/releases/download/$GODOT_SHORTVERSION/$GODOT_DL_ZIPNAME"
         cd ${{ inputs.install-path }}
         echo "Pretend - Download $GODOT_DL_ZIPNAME from $GODOT_DL_URL"
         curl --remote-name "$GODOT_DL_URL"
