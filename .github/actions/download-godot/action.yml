@@ -99,4 +99,4 @@ runs:
           fi
         }
 
-        run_godot --version
+        echo "Godot ran and replied to --version with: $(run_godot --version)"
