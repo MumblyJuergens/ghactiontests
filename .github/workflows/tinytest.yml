@@ -24,6 +24,7 @@ jobs:
 
       - name: Download Godot
         uses: ./.github/actions/download-godot
+        id: download-godot
         with:
           godot-version: 4.7.2
           platform: ${{ steps.detect-os.outputs.platform }}
@@ -34,4 +35,3 @@ jobs:
         with:
           godot-exe: ${{ download-godot.godot-exe }}
           project-path: gdapp
-          
