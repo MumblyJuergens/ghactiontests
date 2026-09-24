@@ -50,7 +50,7 @@ runs:
         GODOT_DL_URL="https://github.com/godotengine/godot-builds/releases/download/$GODOT_DL_FILENAME"
 
         echo "Current at $(pwd)"
-        cd ${{ install-path }}
+        cd ${{ inputs.install-path }}
         echo "Current at $(pwd)"
         echo "Pretend - Download $GODOT_DL_FILENAME from $GODOT_DL_URL"
         # curl --remote-name "$GODOT_DL_URL"
