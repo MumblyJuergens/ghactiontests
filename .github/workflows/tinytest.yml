@@ -24,7 +24,7 @@ jobs:
 
       - name: Download Godot
         uses: ./.github/actions/download-godot
-        id: download-godot
+        # id: download-godot
         with:
           godot-version: 4.7.2
           platform: ${{ steps.detect-os.outputs.platform }}
@@ -33,5 +33,5 @@ jobs:
       - name: Run GDUnit Tests
         uses: ./.github/actions/run-gdunit4
         with:
-          godot-exe: ${{ download-godot.godot-exe }}
+          godot-exe: ${{ steps.download-godot.outputs.godot-exe }}
           project-path: gdapp
