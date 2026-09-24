@@ -1,4 +1,5 @@
 # Parts based on https://github.com/godot-gdunit-labs/gdUnit4-action/blob/master/.gdunit4_action/godot-install/action.yml
+# Rewritten to be cross-platform.
 
 name: install-godot
 description: 'Installs Godot'
@@ -19,10 +20,10 @@ inputs:
     required: true
     default: '${{ github.workspace }}/godotbinary'
   platform:
-    description: "The OS for the Godot binary (e.g. 'linux')"
+    description: "The Godot download file ending (linux.x86_64, macos.univeral, win64.exe)"
     type: string
     required: true
-    default: 'linux'
+    default: 'linux.x86_64'
 
 runs:
   using: composite
@@ -45,5 +46,10 @@ runs:
           # chmod 770 "$GODOT_CONFIG"
         # fi
 
-        # DOWNLOAD_URL=https://github.com/godotengine/godot-builds/releases/download/${{ inputs.godot-version }}-${{ inputs.godot-status-version }}
+        GODOT_DL_FILENAME="${{ inputs.godot-version }}-${{ inputs.godot-release-type }}_${{ inputs.version }}.zip"
+        GODOT_DL_URL="https://github.com/godotengine/godot-builds/releases/download/$GODOT_DL_FILENAME"
+
+        echo "Pretend - Download $GODOT_DL_FILENAME from $GODOT_DL_URL"
+        wget --version
+
 
