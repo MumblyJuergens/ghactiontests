@@ -33,5 +33,5 @@ runs:
         export GODOT_BIN="${{ inputs.godot-exe }}"
         
         cd "${{ github.workspace }}/${{ inputs.project-path }}"
-        ls -al
+        chmod +x "${{ inputs.gdunit-path }}/runtest.sh"
         "${{ inputs.gdunit-path }}/runtest.sh" -a "${{ inputs.tests-path }}"
